@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  web:
+    container_name: app-nextjs
+    image: perporserot/nextjs-docker
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - './:/app'
+      - '/app/node_modules'
+    # build: .
+    ports:
+      - '3000:3000'
