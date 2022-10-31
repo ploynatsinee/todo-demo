@@ -4,8 +4,7 @@ async function handler(req, res) {
    await NextCors(req, res, {
       methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
       origin: 'http://127.0.0.1:8090/',
-      optionsSuccessStatus: 200, 
-      "Access-Control-Allow-Origin": "*",
+      optionsSuccessStatus: 200,
       credentials: true,
    });
 
