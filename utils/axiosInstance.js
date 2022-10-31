@@ -10,4 +10,4 @@ const axiosInstance = axios.create({
 export { 
     API_URL,
     axiosInstance
- };
+};
