@@ -10,6 +10,7 @@ services:
     volumes:
       - './:/app'
       - '/app/node_modules'
+      - ./nginx.conf /etc/nginx/nginx.conf
     ports:
       - '3000:3000'
   
@@ -18,9 +19,8 @@ services:
     build: .
     image: augustodelg/pocketbase:latest
     volumes:
-      # - pocketbase-volume:/app/pocketbase/pb_data
-      # - pocketbase-data:/pb_data
       - ./pocketbase-data:/pocketbase-data
+      - ./nginx.conf /etc/nginx/nginx.conf
     restart: unless-stopped
     ports:
       - "8090:8090"
@@ -33,5 +33,11 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./nginx
+    volumes:
+      - ./templates:/etc/nginx/templates
+      - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - "80:80"
+    environment:
+      - NGINX_HOST=web.com
+      - NGINX_PORT=80
