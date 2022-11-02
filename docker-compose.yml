@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   web:
-    container_name: app-nextjs
+    container_name: web
     image: perporserot/nextjs-docker
     restart: unless-stopped
     build:
@@ -10,6 +10,28 @@ services:
     volumes:
       - './:/app'
       - '/app/node_modules'
-    # build: .
     ports:
       - '3000:3000'
+  
+  pocketbase:
+    container_name: pocketbase
+    build: .
+    image: augustodelg/pocketbase:latest
+    volumes:
+      # - pocketbase-volume:/app/pocketbase/pb_data
+      # - pocketbase-data:/pb_data
+      - ./pocketbase-data:/pocketbase-data
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+
+  nginx:
+    depends_on:
+      - web
+      - pocketbase
+    restart: unless-stopped
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "80:80"
